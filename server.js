@@ -13,6 +13,10 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+// Global middlewares
+app.use(express.json()); // Body parser
+app.use(express.urlencoded({ extended: false }));
+
 // Connect to database
 connectDB();
 

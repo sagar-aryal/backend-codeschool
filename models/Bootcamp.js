@@ -8,6 +8,7 @@ const BootcampSchema = new mongoose.Schema({
     trim: true,
     maxlength: [20, "Name cannot be more than 20 characters"],
   },
+
   slug: String,
   description: {
     type: String,
@@ -21,6 +22,10 @@ const BootcampSchema = new mongoose.Schema({
       "Please use a valid URL with HTTP or HTTPS",
     ],
   },
+  phone: {
+    type: String,
+    maxlength: [20, "Phone number cannot be longer than 20 characters"],
+  },
   email: {
     type: String,
     match: [
@@ -32,7 +37,7 @@ const BootcampSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add an address"],
   },
-  location: {
+  /* location: {
     //GeoJSON Point, more in mongoose docs
     type: {
       type: String,
@@ -41,7 +46,7 @@ const BootcampSchema = new mongoose.Schema({
     },
     coordinates: {
       type: [Number],
-      required: "true",
+      required: true,
       index: "2dsphere",
     },
     formattedAddress: String,
@@ -50,7 +55,7 @@ const BootcampSchema = new mongoose.Schema({
     state: String,
     zipcode: String,
     country: String,
-  },
+  }, */
   carrers: {
     type: [String],
     required: true,
@@ -96,4 +101,4 @@ const BootcampSchema = new mongoose.Schema({
   },
 });
 
-export default BootcampSchema;
+export default mongoose.model("Bootcamp", BootcampSchema);
