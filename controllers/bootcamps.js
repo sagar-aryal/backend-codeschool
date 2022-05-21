@@ -4,19 +4,31 @@ import Bootcamp from "../models/Bootcamp.js";
 // @route   GET /api/v1/bootcamps
 // @access  Public
 
-export const getBootcamps = (req, res, next) => {
-  res.status(200).json({ success: true, message: "Show all bootcamps" });
+export const getBootcamps = async (req, res, next) => {
+  // res.status(200).json({ success: true, message: "Show all bootcamps" });
+  try {
+    const bootcamps = await Bootcamp.find();
+    res.status(200).json({ success: true, data: bootcamps });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Get single bootcamp
 // @route   GET /api/v1/bootcamps/:id
 // @access  Public
 
-export const getBootcamp = (req, res, next) => {
-  res.status(200).json({
+export const getBootcamp = async (req, res, next) => {
+  /*  res.status(200).json({
     success: true,
     message: `Get Single bootcamp of Id ${req.params.id}`,
-  });
+  }); */
+  try {
+    const bootcamp = await Bootcamp.findById(req.params.id);
+    res.status(200).json({ success: true, data: bootcamp });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Create a new bootcamp
@@ -24,7 +36,7 @@ export const getBootcamp = (req, res, next) => {
 // @access  Private
 
 export const createBootcamp = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   // res.status(200).json({ success: true, message: "Create new bootcamp" });
 
   try {
