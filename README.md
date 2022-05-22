@@ -1,5 +1,5 @@
 # backend-codeschool
-Backend project with Node, Express and MongoDB.
+Backend project for codeschool app with Node, Express and MongoDB.
 
 ## Learning Outcomes
 - Custom Error Handling and Mongoose Middleware.
