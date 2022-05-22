@@ -1,4 +1,5 @@
 import Bootcamp from "../models/Bootcamp.js";
+import customError from "../utils/customError.js";
 
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
@@ -27,11 +28,18 @@ export const getBootcamp = async (req, res, next) => {
   }); */
   try {
     const bootcamp = await Bootcamp.findById(req.params.id);
-    if (!bootcamp) res.status(400).json({ success: false });
+
+    if (!bootcamp) {
+      return next(
+        new customError(`Bootcamp not found with id of ${req.params.id}`, 404)
+      );
+    }
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
     // res.status(400).json({ success: false });
-    next(err);
+    next(
+      new customError(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
   }
 };
 

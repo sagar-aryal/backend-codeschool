@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/bootcamps", bootcamps);
 
 // Error Handler Middleware
+
 app.use(errorHandler);
 
 app.listen(port, () => {
