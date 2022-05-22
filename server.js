@@ -2,9 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
+import connectDB from "./config/db.js";
 import bootcamps from "./routes/bootcamps.js";
 import { logger } from "./middleware/logger.js";
-import connectDB from "./config/db.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 // Load env variables
 dotenv.config({ path: "./config/config.env" });
@@ -29,6 +30,9 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount Routers
 app.use("/api/v1/bootcamps", bootcamps);
+
+// Error Handler Middleware
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}`);
