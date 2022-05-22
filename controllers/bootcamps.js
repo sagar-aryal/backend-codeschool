@@ -13,7 +13,7 @@ export const getBootcamps = async (req, res, next) => {
       .status(200)
       .json({ success: true, count: bootcamps.length, data: bootcamps });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -31,15 +31,13 @@ export const getBootcamp = async (req, res, next) => {
 
     if (!bootcamp) {
       return next(
-        new customError(`Bootcamp not found with id of ${req.params.id}`, 404)
+        new customError(`Resource not found with id of ${err.value}`, 404)
       );
     }
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
     // res.status(400).json({ success: false });
-    next(
-      new customError(`Bootcamp not found with id of ${req.params.id}`, 404)
-    );
+    next(err);
   }
 };
 
@@ -58,7 +56,7 @@ export const createBootcamp = async (req, res, next) => {
       data: bootcamp,
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -71,13 +69,18 @@ export const putBootcamp = async (req, res, next) => {
     .status(200)
     .json({ success: true, message: `Update bootcamp ${req.params.id}` }); */
   try {
-    const bootcamp = await Bootcamp.findOneAndUpdate(req.params.id, req.body, {
+    const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    if (!bootcamp) res.status(400).json({ success: false });
+    if (!bootcamp) {
+      return next(
+        new customError(`Resource not found with id of ${err.value}`, 404)
+      );
+    }
+
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -91,9 +94,13 @@ export const deleteBootcamp = async (req, res, next) => {
     .json({ success: true, message: `Delete bootcamp ${req.params.id}` }); */
   try {
     const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
-    if (!bootcamp) res.status(400).json({ success: false });
+    if (!bootcamp) {
+      return next(
+        new customError(`Resource not found with id of ${err.value}`, 404)
+      );
+    }
     res.status(200).json({ success: true, data: {} });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
