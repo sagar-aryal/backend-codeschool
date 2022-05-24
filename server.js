@@ -4,6 +4,7 @@ import morgan from "morgan";
 
 import connectDB from "./config/db.js";
 import bootcamps from "./routes/bootcamps.js";
+import courses from "./routes/courses.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount Routers
 app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 
 // Error Handler Middleware
 
