@@ -38,7 +38,7 @@ const BootcampSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add an address"],
   },
-  location: {
+  /* location: {
     // GeoJSON Point
     type: {
       type: String,
@@ -53,8 +53,9 @@ const BootcampSchema = new mongoose.Schema({
     city: String,
     state: String,
     zipcode: String,
+    
     country: String,
-  },
+  }, */
   carrers: {
     type: [String],
     required: true,
