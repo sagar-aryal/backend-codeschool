@@ -7,7 +7,7 @@ import {
   deleteCourse,
 } from "../controllers/courses.js";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.route("/").get(getCourses).post(createCourse);
 router.route("/:id").get(getCourse).put(putCourse).delete(deleteCourse);
