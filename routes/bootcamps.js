@@ -7,12 +7,12 @@ import {
   deleteBootcamp,
 } from "../controllers/bootcamps.js";
 
-import course from "./courses.js";
+import courseRouter from "./courses.js";
 
 const router = express.Router();
 
 // routing into other routers
-router.use("/:bootcampId/courses", course);
+router.use("/:bootcampId/courses", courseRouter);
 
 router.route("/").get(getBootcamps).post(createBootcamp);
 router.route("/:id").get(getBootcamp).put(putBootcamp).delete(deleteBootcamp);

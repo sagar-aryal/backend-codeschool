@@ -4,14 +4,14 @@ import asyncHandler from "../middleware/asyncHandler.js";
 
 // @desc    Get all courses
 // @route   GET /api/v1/courses
-// @route   GET /api/v1/bootcamps/:bootcampId/:id
+// @route   GET /api/v1/bootcamps/:bootcampId/courses
 // @access  Public
 
 export const getCourses = asyncHandler(async (req, res, next) => {
   let query;
-  //console.log(req.params.bootcampId);
-  if (req.query.bootcampId) {
-    query = Course.find({ bootcamp: req.query.bootcampId });
+  console.log(req.params.bootcampId);
+  if (req.params.bootcampId) {
+    query = Course.find({ bootcamp: req.params.bootcampId });
   } else {
     query = Course.find();
   }
