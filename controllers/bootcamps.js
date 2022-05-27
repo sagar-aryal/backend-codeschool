@@ -122,11 +122,16 @@ export const putBootcamp = asyncHandler(async (req, res, next) => {
 // @access  Private
 
 export const deleteBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+  // const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+
+  // if we use cascade delete functionality findByIdAndDelete will not work! instead we have to use findById and use remove() method.
+  const bootcamp = await Bootcamp.findById(req.params.id);
   if (!bootcamp) {
     return next(
       new customError(`Resource not found with id of ${err.value}`, 404)
     );
   }
+
+  bootcamp.remove();
   res.status(200).json({ success: true, data: {} });
 });
