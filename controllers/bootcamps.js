@@ -20,7 +20,7 @@ export const getBootcamps = asyncHandler(async (req, res, next) => {
   // console.log(reqQuery);
 
   // find resource
-  query = Bootcamp.find(query);
+  query = Bootcamp.find(query).populate("courses");
 
   // select
   if (req.query.select) {
