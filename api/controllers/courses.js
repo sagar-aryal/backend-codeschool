@@ -96,5 +96,8 @@ export const deleteCourse = asyncHandler(async (req, res, next) => {
       new customError(`Resource not found with id of ${err.value}`, 404)
     );
   }
+
+  await course.remove();
+
   res.status(200).json({ success: true, data: {} });
 });
