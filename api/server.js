@@ -6,6 +6,7 @@ import fileupload from "express-fileupload";
 import connectDB from "./config/db.js";
 import bootcamps from "./routes/bootcamps.js";
 import courses from "./routes/courses.js";
+import auth from "./routes/auth.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -39,6 +40,7 @@ app.use(fileupload());
 // Mount Routers
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
+app.use("/api/v1/auth", auth);
 
 // Error Handler Middleware
 
