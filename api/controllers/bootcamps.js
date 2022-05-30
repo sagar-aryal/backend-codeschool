@@ -1,3 +1,5 @@
+import path from "path";
+
 import Bootcamp from "../models/Bootcamp.js";
 import customError from "../utils/customError.js";
 import asyncHandler from "../middleware/asyncHandler.js";
@@ -134,4 +136,53 @@ export const deleteBootcamp = asyncHandler(async (req, res, next) => {
 
   bootcamp.remove();
   res.status(200).json({ success: true, data: {} });
+});
+
+// @desc    Upload photo for bootcamp
+// @route   PUT /api/v1/bootcamps/:id/photo
+// @access  Private
+
+export const uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
+  const bootcamp = await Bootcamp.findById(req.params.id);
+  if (!bootcamp) {
+    return next(
+      new customError(`Resource not found with id of ${err.value}`, 404)
+    );
+  }
+
+  if (!req.files) {
+    return next(new customError(`Please upload a file`, 400));
+  }
+
+  // console.log(req.files);
+  const file = req.files.file;
+
+  // making sure file is a image
+  if (!file.mimetype.startsWith("image")) {
+    return next(new customError(`Uploaded file is not an image`, 400));
+  }
+
+  // check filesize
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new customError(
+        `Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`,
+        400
+      )
+    );
+  }
+
+  // create custom file name. This need to be done because if same file name uploaded, we lost the old one with same name.
+  file.name = `photo_${bootcamp._id}${path.parse(file.name).ext}`;
+
+  // upload file to upload path
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      console.log(err);
+      return next(new customError(`Problem with file upload`, 500));
+    }
+
+    await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
+    res.status(200).json({ success: true, data: file.name });
+  });
 });

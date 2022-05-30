@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import fileupload from "express-fileupload";
 
 import connectDB from "./config/db.js";
 import bootcamps from "./routes/bootcamps.js";
@@ -8,12 +9,15 @@ import courses from "./routes/courses.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
 
-// Load env variables
-dotenv.config({ path: "./config/config.env" });
-
 const app = express();
 
 const port = process.env.PORT || 5000;
+
+// Load env variables
+dotenv.config({ path: "./config/config.env" });
+
+// Set static folder
+app.use(express.static("public"));
 
 // Global middlewares
 app.use(express.json()); // Body parser
@@ -28,6 +32,9 @@ connectDB();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// File uploading
+app.use(fileupload());
 
 // Mount Routers
 app.use("/api/v1/bootcamps", bootcamps);
