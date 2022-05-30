@@ -31,8 +31,8 @@ const importData = async () => {
     await Course.create(courses);
     console.log("Data imported from DB");
     process.exit();
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -43,8 +43,8 @@ const deleteData = async () => {
     await Course.deleteMany();
     console.log("Data deleted from DB");
     process.exit();
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
   }
 };
 
