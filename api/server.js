@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import fileupload from "express-fileupload";
+import cookieParser from "cookie-parser";
 
 import connectDB from "./config/db.js";
 import bootcamps from "./routes/bootcamps.js";
@@ -23,6 +24,7 @@ app.use(express.static("public"));
 // Global middlewares
 app.use(express.json()); // Body parser
 app.use(express.urlencoded({ extended: false }));
+app.use(express.cookieParser()); // Cookie parser
 
 // Connect to database
 connectDB();

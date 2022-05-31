@@ -1,6 +1,11 @@
+import dotenv from "dotenv";
+
 import User from "../models/User.js";
 import customError from "../utils/customError.js";
 import asyncHandler from "../middleware/asyncHandler.js";
+
+// config env var
+dotenv.config();
 
 // @desc    Register user
 // @route   GET /api/v1/auth/register
@@ -53,3 +58,15 @@ export const login = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, token });
 });
+
+// get token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+  // create token
+  const token = user.getSignedJwtToken();
+
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+  };
+};
