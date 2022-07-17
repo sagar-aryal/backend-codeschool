@@ -1,6 +1,6 @@
-# codeschool
+# codeschool-backend
 
-Full stack project for codeschool app with React, Node, Express and MongoDB.
+backend project for codeschool app with React, Node, Express and MongoDB.
 
 ## Learning Outcomes (Backend)
 
@@ -8,4 +8,4 @@ Full stack project for codeschool app with React, Node, Express and MongoDB.
 - Authentication and Users & Permissions.
 - API Security.
 
-## Learning Outcomes (Frontend)
+
